@@ -1,17 +1,17 @@
 import { useEffect, useState } from "react";
 import Places from "./Places.jsx";
+import axios from "axios";
 
 export default function AvailablePlaces({ onSelectPlace }) {
   const [places, setPlaces] = useState([]);
 
   useEffect(() => {
-    fetch("http://localhost:3000/places/")
-      .then((response) => {
-        return response.json();
-      })
-      .then((data) => {
-        setPlaces(data.places);
-      });
+    const fetchData = async () => {
+      const response = await axios.get("http://localhost:3000/places/");
+      setPlaces(response.data.places);
+    };
+
+    fetchData();
   }, []);
 
   return (
