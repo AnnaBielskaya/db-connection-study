@@ -3,6 +3,7 @@ import Places from "./Places.jsx";
 import ErrorMessage from "./ErrorMessage.jsx";
 import { sortPlacesByDistance } from "../loc.js";
 import { fetchPlaces } from "../http.js";
+import Modal from "./Modal.jsx";
 
 export default function AvailablePlaces({ onSelectPlace }) {
   const [isLoading, setIsLoading] = useState(false);
@@ -41,11 +42,13 @@ export default function AvailablePlaces({ onSelectPlace }) {
   return (
     <>
       {errorMessage && (
-        <ErrorMessage
-          title="Error"
-          message={errorMessage}
-          onConfirm={() => setErrorMessage(null)}
-        />
+        <Modal open={!!errorMessage} onClose={() => setErrorMessage(null)}>
+          <ErrorMessage
+            title="Error"
+            message={errorMessage}
+            onConfirm={() => setErrorMessage(null)}
+          />
+        </Modal>
       )}
       {!errorMessage && (
         <Places
